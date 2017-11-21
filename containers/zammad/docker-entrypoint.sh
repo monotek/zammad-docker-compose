@@ -5,14 +5,22 @@ set -e
 function check_railsserver_available {
   # wait for zammad process coming up
   until (echo > /dev/tcp/zammad-railsserver/3000) &> /dev/null; do
-    echo "backup waiting for zammads railsserver to be ready..."
+    echo "waiting for zammads railsserver to be ready..."
+    sleep 2
+  done
+}
+
+function check_nfs_available {
+  until (echo > /dev/tcp/zammad-nfs/2049) &> /dev/null; do
+    echo "waiting for zammads nfsserver to be ready..."
     sleep 2
   done
 }
 
 function mount_nfs {
   if [ -n "$(env|grep KUBERNETES)" ]; then
-    mount -t nfs4 zammad-nfs:/ /home/zammad/tmp
+    check_nfs_available
+    mount -t nfs4 zammad-nfs:/ /home/zammad
   fi
 }
 
@@ -27,12 +35,12 @@ if [ "$1" = 'zammad-railsserver' ]; then
 
   echo "railsserver can access postgresql server now..."
 
+  mount_nfs
+
   rsync -a --delete --exclude 'storage/fs/*' ${ZAMMAD_TMP_DIR}/ ${ZAMMAD_DIR}
   cd ${ZAMMAD_DIR}
   gem update bundler
   bundle install
-
-  mount_nfs
 
   # db mirgrate
   set +e
