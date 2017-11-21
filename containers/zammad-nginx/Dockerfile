@@ -19,3 +19,8 @@ ADD containers/zammad-nginx/nginx-zammad.conf /etc/nginx/conf.d/zammad.conf
 RUN apk add --update nfs-utils && \
     rm -rf /var/cache/apk/* && \
     rm /etc/nginx/conf.d/default.conf
+
+COPY containers/zammad-nginx/docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["zammad-nginx"]
