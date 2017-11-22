@@ -57,7 +57,7 @@ if [ "$1" = 'zammad-railsserver' ]; then
   bundle exec rake searchindex:rebuild
 
   # disable storage setting in admin backend
-  bundle exec rails r "setting = Setting.find_by(name: 'storage_provider');setting.preferences[:permission] = ['admin_not_existing_permission'];setting.save!"
+  #bundle exec rails r "setting = Setting.find_by(name: 'storage_provider');setting.preferences[:permission] = ['admin_not_existing_permission'];setting.save!"
 
   # chown everything to zammad user
   chown -R ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_DIR}
