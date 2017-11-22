@@ -2,6 +2,8 @@ FROM nginx:alpine
 MAINTAINER Zammad <info@zammad.org>
 ARG BUILD_DATE
 
+ENV ZAMMAD_DIR /home/zammad
+
 LABEL org.label-schema.build-date="$BUILD_DATE" \
       org.label-schema.name="Zammad" \
       org.label-schema.license="AGPL-3.0" \
