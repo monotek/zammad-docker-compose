@@ -44,7 +44,7 @@ RUN BUILD_DEPENDENCIES="git build-essential libffi-dev libpq5 libpq-dev nginx nf
     && bundle exec rake assets:precompile \
     && sed -e 's#.*adapter: postgresql#  adapter: postgresql#g' -e 's#.*username:.*#  username: postgres#g' -e 's#.*password:.*#  password: \n  host: zammad-postgresql\n#g' < config/database.yml.pkgr > config/database.yml \
     && rm -r tmp/cache \
-    && sed -e 's#server localhost:3000#server zammad-railsserver:3000#g' -e 's#localhost:6042#zammad-websocket:6042#g' -e 's#server_name localhost#server_name _#g' < contrib/nginx/zammad.conf > /etc/nginx/sites-enabled/zammad.conf \
+    && sed -e 's#server localhost:3000#server zammad-railsserver:3000#g' -e 's#localhost:6042#zammad-websocket:6042#g' -e 's#server_name localhost#server_name _#g' < contrib/nginx/zammad.conf > /etc/nginx/sites-enabled/default.conf \
     && chown -R ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_DIR}
 
 # docker init
