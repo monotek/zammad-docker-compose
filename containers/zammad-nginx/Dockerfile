@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:alpine
 MAINTAINER Zammad <info@zammad.org>
 ARG BUILD_DATE
 
@@ -13,8 +13,9 @@ LABEL org.label-schema.build-date="$BUILD_DATE" \
       org.label-schema.schema-version="1.2" \
       org.label-schema.docker.cmd="sysctl -w vm.max_map_count=262144;docker-compose up"
 
-RUN apt-get update && \
-    apt-get install nfs-common
+RUN apk add --update nfs-utils && \
+    rm -rf /var/cache/apk/* && \
+    rm /etc/nginx/conf.d/default.conf
 
 ADD containers/zammad-nginx/nginx-zammad.conf /etc/nginx/conf.d/zammad.conf
 
