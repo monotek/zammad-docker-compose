@@ -19,6 +19,7 @@ spec:
       containers:
       - name: zammad-nginx
         image: monotek/zammad-docker-compose:zammad-nginx
+        args: [ "zammad-nginx" ]
         ports:
         - containerPort: 80
           name: nginx

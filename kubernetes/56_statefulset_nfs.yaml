@@ -33,5 +33,5 @@ spec:
         securityContext:
           privileged: true
         volumeMounts:
-        - mountPath: /home/zammad
+        - mountPath: /mnt/zammad
           name: zammad-home
