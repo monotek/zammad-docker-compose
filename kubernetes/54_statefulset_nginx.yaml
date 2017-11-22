@@ -26,5 +26,3 @@ spec:
         - containerPort: 6042
           name: nginx-ws
         imagePullPolicy: Always
-        securityContext:
-          privileged: true
