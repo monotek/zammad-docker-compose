@@ -17,6 +17,10 @@ spec:
     spec:
       terminationGracePeriodSeconds: 10
       containers:
+      volumes:
+      - name: zammad-storage
+        persistentVolumeClaim:
+          claimName: zammad-storage
       - name: zammad-railsserver
         image: monotek/zammad-docker-compose:zammad
         imagePullPolicy: Always
@@ -26,3 +30,6 @@ spec:
           name: railsserver
         securityContext:
           privileged: true
+        volumeMounts:
+        - mountPath: /home/zammad/storage/fs
+          name: zammad-home

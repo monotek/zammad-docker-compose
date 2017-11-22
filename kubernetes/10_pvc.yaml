@@ -24,3 +24,16 @@ spec:
   resources:
     requests:
       storage: 10G
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: zammad-storage
+  namespace: zammad
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10G
