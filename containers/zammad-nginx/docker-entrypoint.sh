@@ -17,16 +17,11 @@ function mount_nfs {
   fi
 }
 
-
 # zammad-railsserver
 if [ "$1" = 'zammad-nginx' ]; then
 
-
-  echo "scheduler can access raillsserver now..."
-
   mount_nfs
 
-  # start scheduler
-  cd ${ZAMMAD_DIR}
-  exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec script/scheduler.rb run
+  nginx -g daemon off
+
 fi
