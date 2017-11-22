@@ -22,6 +22,6 @@ if [ "$1" = 'zammad-nginx' ]; then
 
   mount_nfs
 
-  nginx -g daemon off
+  /usr/sbin/nginx -g 'daemon off;'
 
 fi

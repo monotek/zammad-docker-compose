@@ -4,11 +4,10 @@ apiVersion: v1
 metadata:
   name: zammad-postgresql
   namespace: zammad
-  annotations:
-    volume.beta.kubernetes.io/storage-class: standard
 spec:
+  storageClassName: standard  
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 10G
@@ -18,11 +17,10 @@ apiVersion: v1
 metadata:
   name: zammad-elasticsearch
   namespace: zammad
-  annotations:
-    volume.beta.kubernetes.io/storage-class: standard
 spec:
+  storageClassName: standard
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 10G
@@ -32,11 +30,10 @@ apiVersion: v1
 metadata:
   name: zammad-home
   namespace: zammad
-  annotations:
-    volume.beta.kubernetes.io/storage-class: standard
 spec:
+  storageClassName: standard
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 10G
