@@ -16,10 +16,6 @@ spec:
         app: nfs
     spec:
       terminationGracePeriodSeconds: 10
-      volumes:
-      - name: zammad-home
-        persistentVolumeClaim:
-          claimName: zammad-home
       containers:
       - name: zammad-nfs
         image: monotek/zammad-docker-compose:zammad-nfs
@@ -32,6 +28,3 @@ spec:
           name: rpc
         securityContext:
           privileged: true
-        volumeMounts:
-        - mountPath: /mnt/zammad
-          name: zammad-home
