@@ -28,7 +28,7 @@ services:
   zammad-nginx:
     depends_on:
       - zammad-railsserver
-    image: zammad/zammad-docker-compose:zammad-nginx${VERSION}
+    image: zammad/zammad-docker-compose:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
@@ -37,6 +37,7 @@ services:
     restart: always
     volumes:
       - data-zammad:/home/zammad
+    command: ["zammad-nginx"]
 
   zammad-postgresql:
     image: zammad/zammad-docker-compose:zammad-postgresql${VERSION}

@@ -3,7 +3,6 @@ MAINTAINER Zammad <info@zammad.org>
 ARG BUILD_DATE
 
 ENV ZAMMAD_DIR /home/zammad
-ENV ZAMMAD_TMP_DIR /tmp/zammad
 ENV ZAMMAD_USER zammad
 ENV RAILS_ENV production
 ENV RAILS_SERVER puma
@@ -23,7 +22,7 @@ LABEL org.label-schema.build-date="$BUILD_DATE" \
       org.label-schema.docker.cmd="sysctl -w vm.max_map_count=262144;docker-compose up"
 
 # install dependencies, GOSU & zammad
-RUN BUILD_DEPENDENCIES="git build-essential libffi-dev libpq5 libpq-dev nfs-common rsync" \
+RUN BUILD_DEPENDENCIES="git build-essential libffi-dev libpq5 libpq-dev nginx nfs-common" \
     GOSU_DEPENDENCIES="ca-certificates wget" \
     set -ex \
 	  && apt-get update && apt-get install -y --force-yes --no-install-recommends ${BUILD_DEPENDENCIES} ${GOSU_DEPENDENCIES} && rm -rf /var/lib/apt/lists/* \
@@ -36,16 +35,17 @@ RUN BUILD_DEPENDENCIES="git build-essential libffi-dev libpq5 libpq-dev nfs-comm
 	  && chmod +x /usr/local/bin/gosu \
 	  && gosu nobody true \
     && useradd -M -d ${ZAMMAD_DIR} -s /bin/bash ${ZAMMAD_USER} \
-    && cd $(dirname ${ZAMMAD_TMP_DIR}) \
+    && cd $(dirname ${ZAMMAD_DIR}) \
     && git clone --depth 1 -b "${GIT_BRANCH}" "${GIT_URL}" \
-    && cd ${ZAMMAD_TMP_DIR} \
+    && cd ${ZAMMAD_DIR} \
     && bundle install --without test development mysql \
     && contrib/packager.io/fetch_locales.rb \
     && sed -e 's#.*adapter: postgresql#  adapter: nulldb#g' -e 's#.*username:.*#  username: postgres#g' -e 's#.*password:.*#  password: \n  host: zammad-postgresql\n#g' < config/database.yml.pkgr > config/database.yml \
     && bundle exec rake assets:precompile \
     && sed -e 's#.*adapter: postgresql#  adapter: postgresql#g' -e 's#.*username:.*#  username: postgres#g' -e 's#.*password:.*#  password: \n  host: zammad-postgresql\n#g' < config/database.yml.pkgr > config/database.yml \
     && rm -r tmp/cache \
-    && chown -R ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_TMP_DIR}
+    && sed -e 's#server localhost:3000#server zammad-railsserver:3000#g' -e 's#localhost:6042#zammad-websocket:6042#g' -e 's#server_name localhost#server_name _#g' < contrib/nginx/zammad.conf > /etc/nginx/sites-enabled/zammad.conf \
+    && chown -R ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_DIR}
 
 # docker init
 COPY containers/zammad/docker-entrypoint.sh /

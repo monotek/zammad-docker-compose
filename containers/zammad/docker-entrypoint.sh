@@ -20,8 +20,8 @@ function check_nfs_available {
 function mount_nfs {
   if [ -n "$(env|grep KUBERNETES)" ]; then
     check_nfs_available
-    test -d ${ZAMMAD_DIR} || mkdir -p ${ZAMMAD_DIR}
-    mount -t nfs4 zammad-nfs:/ ${ZAMMAD_DIR}
+    test -d ${ZAMMAD_DIR}/tmp || mkdir -p ${ZAMMAD_DIR}/tmp
+    mount -t nfs4 zammad-nfs:/ ${ZAMMAD_DIR}/tmp
   fi
 }
 
@@ -38,10 +38,7 @@ if [ "$1" = 'zammad-railsserver' ]; then
 
   mount_nfs
 
-  rsync -a --delete --exclude 'storage/fs/*' ${ZAMMAD_TMP_DIR}/ ${ZAMMAD_DIR}
   cd ${ZAMMAD_DIR}
-  gem update bundler
-  bundle install
 
   # db mirgrate
   set +e
@@ -60,16 +57,17 @@ if [ "$1" = 'zammad-railsserver' ]; then
   bundle exec rails r "Setting.set('es_url', 'http://zammad-elasticsearch:9200')"
   bundle exec rake searchindex:rebuild
 
+  # disable storage setting in admin backend
+  bundle exec rails r "setting = Setting.find_by(name: 'storage_provider');setting.preferences[:permission] = ['admin_not_existing_permission'];setting.save!"
+
+  # chown everything to zammad user
   chown -R ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_DIR}
 
   # run zammad
   echo "starting zammad..."
-  echo "zammad will be accessable on http://localhost in some seconds"
 
   if [ "${RAILS_SERVER}" == "puma" ]; then
     exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec puma -b tcp://0.0.0.0:3000 -e ${RAILS_ENV}
-  elif [ "${RAILS_SERVER}" == "unicorn" ]; then
-    exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec unicorn -p 3000 -c config/unicorn.rb -E ${RAILS_ENV}
   fi
 fi
 
@@ -98,4 +96,9 @@ if [ "$1" = 'zammad-websocket' ]; then
 
   cd ${ZAMMAD_DIR}
   exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec script/websocket-server.rb -b 0.0.0.0 start
+fi
+
+# zammad nginx
+if [ "$1" = 'zammad-nginx' ]; then
+  /usr/sbin/nginx -g 'daemon off;'
 fi

@@ -5,19 +5,6 @@ metadata:
   name: zammad-postgresql
   namespace: zammad
 spec:
-  storageClassName: standard  
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10G
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: zammad-elasticsearch
-  namespace: zammad
-spec:
   storageClassName: standard
   accessModes:
     - ReadWriteOnce
@@ -28,7 +15,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: zammad-home
+  name: zammad-elasticsearch
   namespace: zammad
 spec:
   storageClassName: standard
