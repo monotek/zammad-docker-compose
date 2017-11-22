@@ -13,12 +13,11 @@ LABEL org.label-schema.build-date="$BUILD_DATE" \
       org.label-schema.schema-version="1.2" \
       org.label-schema.docker.cmd="sysctl -w vm.max_map_count=262144;docker-compose up"
 
-
-ADD containers/zammad-nginx/nginx-zammad.conf /etc/nginx/conf.d/zammad.conf
-
 RUN apk add --update nfs-utils && \
     rm -rf /var/cache/apk/* && \
     rm /etc/nginx/conf.d/default.conf
+
+ADD containers/zammad-nginx/nginx-zammad.conf /etc/nginx/conf.d/zammad.conf
 
 COPY containers/zammad-nginx/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
