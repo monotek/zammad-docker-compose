@@ -7,7 +7,7 @@ services:
     depends_on:
       - zammad-railsserver
     entrypoint: /usr/local/bin/backup.sh
-    image: zammad/zammad-docker-compose:zammad-postgresql${VERSION}
+    image: monotek/zammad-docker-compose:zammad-postgresql${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
@@ -18,7 +18,7 @@ services:
       - zammad-data:/home/zammad/storage/fs
 
   zammad-elasticsearch:
-    image: zammad/zammad-docker-compose:zammad-elasticsearch${VERSION}
+    image: monotek/zammad-docker-compose:zammad-elasticsearch${VERSION}
     labels:
       io.rancher.container.pull_image: always
     restart: always
@@ -29,7 +29,7 @@ services:
     command: ["zammad-nginx"]
     depends_on:
       - zammad-railsserver
-    image: zammad/zammad-docker-compose:zammad${VERSION}
+    image: monotek/zammad-docker-compose:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
@@ -38,7 +38,7 @@ services:
     restart: always
 
   zammad-postgresql:
-    image: zammad/zammad-docker-compose:zammad-postgresql${VERSION}
+    image: monotek/zammad-docker-compose:zammad-postgresql${VERSION}
     labels:
       io.rancher.container.pull_image: always
     restart: always
@@ -47,7 +47,7 @@ services:
     command: ["zammad-railsserver"]
     depends_on:
       - zammad-postgresql
-    image: zammad/zammad-docker-compose:zammad${VERSION}
+    image: monotek/zammad-docker-compose:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
@@ -61,7 +61,7 @@ services:
     command: ["zammad-scheduler"]
     depends_on:
       - zammad-railsserver
-    image: zammad/zammad-docker-compose:zammad${VERSION}
+    image: monotek/zammad-docker-compose:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
@@ -73,7 +73,7 @@ services:
     command: ["zammad-websocket"]
     depends_on:
       - zammad-railsserver
-    image: zammad/zammad-docker-compose:zammad${VERSION}
+    image: monotek/zammad-docker-compose:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
