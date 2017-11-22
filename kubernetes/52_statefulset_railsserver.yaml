@@ -32,4 +32,4 @@ spec:
           privileged: true
         volumeMounts:
         - mountPath: /home/zammad/storage/fs
-          name: zammad-home
+          name: zammad-storage
