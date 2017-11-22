@@ -15,7 +15,7 @@ services:
     restart: always
     volumes:
       - zammad-backup:/var/tmp/zammad
-      - zammad-data:/home/zammad/storage/fs
+      - zammad-data:/opt/zammad/storage/fs
 
   zammad-elasticsearch:
     image: monotek/zammad-docker-compose:zammad-elasticsearch${VERSION}
