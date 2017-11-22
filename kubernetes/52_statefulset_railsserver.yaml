@@ -31,5 +31,5 @@ spec:
         securityContext:
           privileged: true
         volumeMounts:
-        - mountPath: /home/zammad/storage
+        - mountPath: /opt/zammad/storage
           name: zammad-storage
