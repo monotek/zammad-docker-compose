@@ -12,8 +12,8 @@ spec:
   template:
     metadata:
       labels:
-        component: nginx
-        app: zammad
+        component: webserver
+        app: nginx
     spec:
       terminationGracePeriodSeconds: 10
       containers:
