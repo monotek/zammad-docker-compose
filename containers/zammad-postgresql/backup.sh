@@ -2,14 +2,6 @@
 
 set -e
 
-function check_railsserver_available {
-  # wait for zammad process coming up
-  until (echo > /dev/tcp/zammad-railsserver/3000) &> /dev/null; do
-    echo "backup waiting for zammads railsserver to be ready..."
-    sleep 2
-  done
-}
-
 function zammad_backup {
   TIMESTAMP="$(date +'%Y%m%d%H%M%S')"
 
@@ -28,9 +20,6 @@ function zammad_backup {
 }
 
 if [ "$1" = 'zammad-backup' ]; then
-
-  check_railsserver_available
-
   while true; do
     zammad_backup
 
@@ -40,7 +29,5 @@ if [ "$1" = 'zammad-backup' ]; then
 fi
 
 if [ "$1" = 'zammad-backup-once' ]; then
-  check_railsserver_available
-
   zammad_backup
 fi
