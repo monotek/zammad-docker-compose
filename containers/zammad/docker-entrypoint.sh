@@ -20,7 +20,8 @@ function check_nfs_available {
 function mount_nfs {
   if [ -n "$(env|grep KUBERNETES)" ]; then
     check_nfs_available
-    mount -t nfs4 zammad-nfs:/ /home/zammad
+    test -d ${ZAMMAD_DIR} || mkdir -p ${ZAMMAD_DIR}
+    mount -t nfs4 zammad-nfs:/ ${ZAMMAD_DIR}
   fi
 }
 
