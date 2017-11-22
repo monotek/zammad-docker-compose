@@ -55,7 +55,7 @@ services:
       - zammad-postgresql
     restart: always
     volumes:
-      - zammad-storage:/home/zammad/storage/fs
+      - zammad-data:/home/zammad/storage
 
   zammad-scheduler:
     command: ["zammad-scheduler"]
