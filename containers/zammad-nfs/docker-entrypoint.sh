@@ -5,8 +5,9 @@ set -e
 if [ "$1" = 'zammad-nfs' ]; then
   echo "create & mount tmpfs"
   test -d ${NFS_DIR}/tmp || mkdir -p ${NFS_DIR}/tmp
-  mount -t tmpfs -o size=${TMPFS_SIZE} none ${NFS_DIR}/tmp
   chmod -R 777 ${NFS_DIR}
+  mount -t tmpfs -o size=${TMPFS_SIZE} none ${NFS_DIR}/tmp
+  chown -R 1000:1000 ${NFS_DIR}
 
   echo "create nfs exports"
   echo "# NFS Export for Zammad" > /etc/exports
