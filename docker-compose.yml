@@ -55,7 +55,8 @@ services:
       - zammad-postgresql
     restart: always
     volumes:
-      - zammad-data:/home/zammad/storage
+      - zammad-data:/opt/zammad/storage
+      - zammad-tmp:/opt/zammad/tmp
 
   zammad-scheduler:
     command: ["zammad-scheduler"]
@@ -68,6 +69,8 @@ services:
       - zammad-elasticsearch
       - zammad-postgresql
     restart: always
+    volumes:
+      - zammad-tmp:/opt/zammad/tmp
 
   zammad-websocket:
     command: ["zammad-websocket"]
@@ -79,6 +82,8 @@ services:
     links:
       - zammad-postgresql
     restart: always
+    volumes:
+      - zammad-tmp:/opt/zammad/tmp
 
 volumes:
   elasticsearch-data:
@@ -86,4 +91,6 @@ volumes:
   zammad-backup:
     driver: local
   zammad-data:
+    driver: local
+  zammad-tmp:
     driver: local
