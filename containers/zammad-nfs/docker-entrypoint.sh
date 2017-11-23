@@ -17,7 +17,8 @@ if [ "$1" = 'zammad-nfs' ]; then
   #echo "${NFS_DIR_DATA} *(rw,sync,no_subtree_check,fsid=0,no_root_squash)" >> /etc/exports
   #echo "${NFS_DIR_TMP} *(rw,sync,no_subtree_check,fsid=0,no_root_squash)" >> /etc/exports
 
-  echo "${NFS_DIR_ROOT} *(rw,sync,no_subtree_check,fsid=0,no_root_squash)" >> /etc/exports
+  echo "${NFS_DIR_ROOT}/${NFS_DIR_DATA} *(rw,sync,no_subtree_check,fsid=0,no_root_squash)" >> /etc/exports
+  echo "${NFS_DIR_ROOT}/${NFS_DIR_TMP} *(rw,sync,no_subtree_check,fsid=1,no_root_squash)" >> /etc/exports
 
   #exportfs -o rw,sync,no_subtree_check,fsid=0,no_root_squash ${NFS_DIR_DATA}
   #exportfs -o rw,sync,no_subtree_check,fsid=1,no_root_squash ${NFS_DIR_TMP}
