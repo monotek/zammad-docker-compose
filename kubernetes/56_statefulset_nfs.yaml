@@ -22,8 +22,7 @@ spec:
           claimName: zammad-storage
       containers:
       - name: zammad-nfs
-        image: monotek/zammad-docker-compose:zammad-nfs
-        args: [ "zammad-nfs" ]
+        image: gcr.io/google_containers/volume-nfs
         imagePullPolicy: Always
         ports:
         - containerPort: 2049
@@ -33,5 +32,5 @@ spec:
         securityContext:
           privileged: true
         volumeMounts:
-        - mountPath: /exports/data
+        - mountPath: /exports
           name: zammad-storage

@@ -22,10 +22,10 @@ function mount_nfs {
     check_nfs_available
 
     test -d ${ZAMMAD_DIR}/tmp || mkdir -p ${ZAMMAD_DIR}/tmp
-    mount -t nfs4 zammad-nfs:/tmp ${ZAMMAD_DIR}/tmp
+    mount -t nfs4 zammad-nfs:/ ${ZAMMAD_DIR}/tmp
 
-    test -d ${ZAMMAD_DIR}/storage || mkdir -p ${ZAMMAD_DIR}/storage
-    mount -t nfs4 zammad-nfs:/data ${ZAMMAD_DIR}/storage
+    #test -d ${ZAMMAD_DIR}/storage || mkdir -p ${ZAMMAD_DIR}/storage
+    #mount -t nfs4 zammad-nfs:/data ${ZAMMAD_DIR}/storage
   fi
 }
 
