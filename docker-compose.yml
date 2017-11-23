@@ -70,6 +70,7 @@ services:
       - zammad-postgresql
     restart: always
     volumes:
+      - zammad-data:/opt/zammad/storage
       - zammad-tmp:/opt/zammad/tmp
 
   zammad-websocket:
@@ -83,6 +84,7 @@ services:
       - zammad-postgresql
     restart: always
     volumes:
+      - zammad-data:/opt/zammad/storage
       - zammad-tmp:/opt/zammad/tmp
 
 volumes:
