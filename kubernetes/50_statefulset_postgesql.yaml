@@ -24,9 +24,9 @@ spec:
       - name: zammad-postgresql
         image: monotek/zammad-docker-compose:zammad-postgresql
         ports:
-        - containerPort: 5432
-          name: postgresql
+        - name: postgresql
+          containerPort: 5432
         imagePullPolicy: Always
         volumeMounts:
-        - mountPath: /var/lib/postgresql
-          name: zammad-postgresql
+        - name: zammad-postgresql
+          mountPath: /var/lib/postgresql

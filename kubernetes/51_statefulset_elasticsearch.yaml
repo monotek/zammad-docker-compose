@@ -30,9 +30,9 @@ spec:
       - name: zammad-elasticsearch
         image: monotek/zammad-docker-compose:zammad-elasticsearch
         ports:
-        - containerPort: 9200
-          name: elasticsearch
+        - name: elasticsearch
+          containerPort: 9200
         imagePullPolicy: Always
         volumeMounts:
-        - mountPath: /usr/share/elasticsearch/data
-          name: zammad-elasticsearch
+        - name: zammad-elasticsearch
+          mountPath: /usr/share/elasticsearch/data
