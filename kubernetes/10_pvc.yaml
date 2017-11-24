@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: zammad-postgresql
+  name: zammad
   namespace: zammad
 spec:
   storageClassName: standard
@@ -28,7 +28,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: zammad-storage
+  name: zammad-postgresql
   namespace: zammad
 spec:
   storageClassName: standard

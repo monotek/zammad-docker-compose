@@ -32,5 +32,5 @@ spec:
         securityContext:
           privileged: true
         volumeMounts:
-        - mountPath: /exports/data
-          name: zammad-storage
+        - mountPath: /exports
+          name: zammad
