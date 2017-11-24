@@ -5,7 +5,7 @@ metadata:
   namespace: zammad
   labels:
     component: netfs
-    app: zammad
+    app: nfs
 spec:
   serviceName: zammad-nfs
   replicas: 1

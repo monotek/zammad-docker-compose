@@ -82,7 +82,7 @@ if [ "$1" = 'zammad-scheduler' ]; then
 
   # start scheduler
   cd ${ZAMMAD_DIR}
-  exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec script/scheduler.rb run
+  exec gosu ${Zzammad-nginx-59f68b57f-j6v4jAMMAD_USER}:${ZAMMAD_USER} bundle exec script/scheduler.rb run
 fi
 
 
@@ -100,5 +100,5 @@ fi
 
 # zammad nginx
 if [ "$1" = 'zammad-nginx' ]; then
-  /usr/sbin/nginx -g 'daemon off;'
+  exec /usr/sbin/nginx -g 'daemon off;'
 fi

@@ -9,11 +9,13 @@ spec:
     metadata:
       labels:
         app: zammad
+        component: services
     spec:
       volumes:
       - name: cache-volume
         emptyDir: {}
       containers:
+
       - name: zammad-scheduler
         image: monotek/zammad-docker-compose:zammad
         args: [ "zammad-scheduler" ]
@@ -21,29 +23,31 @@ spec:
         securityContext:
           privileged: true
         volumeMounts:
-        - mountPath: /opt/zammad/tmp
-          name: cache-volume
+        - name: cache-volume
+          mountPath: /opt/zammad/tmp
+
       - name: zammad-railsserver
         image: monotek/zammad-docker-compose:zammad
         imagePullPolicy: Always
         args: ["zammad-railsserver"]
         ports:
-        - containerPort: 3000
-          name: railsserver
+        - name: railsserver
+          containerPort: 3000
         securityContext:
           privileged: true
         volumeMounts:
-        - mountPath: /opt/zammad/tmp
-          name: cache-volume
+        - name: cache-volume
+          mountPath: /opt/zammad/tmp
+
       - name: zammad-websocket
         image: monotek/zammad-docker-compose:zammad
         args: [ "zammad-websocket" ]
         ports:
-        - containerPort: 6042
-          name: websocket
+        - name: websocket
+          containerPort: 6042
         imagePullPolicy: Always
         securityContext:
           privileged: true
         volumeMounts:
-        - mountPath: /opt/zammad/tmp
-          name: cache-volume
+        - name: cache-volume
+          mountPath: /opt/zammad/tmp

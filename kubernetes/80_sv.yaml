@@ -15,6 +15,7 @@ spec:
     component: database
     app: postgresql
   type: NodePort
+
 ---
 kind: Service
 apiVersion: v1
@@ -32,40 +33,27 @@ spec:
     component: searchindex
     app: elasticsearch
   type: NodePort
+
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: zammad-railsserver
+  name: zammad
   namespace: zammad
   labels:
-    component: railsserver
-    app: zammad
-spec:
-  ports:
-  - name: railsserver
-    port: 3000
-  selector:
-    component: railsserver
-    app: zammad
-  type: NodePort
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: zammad-websocket
-  namespace: zammad
-  labels:
-    component: websocket
+    component: services
     app: zammad
 spec:
   ports:
   - name: websocket
     port: 6042
+  - name: railsserver
+    port: 3000
   selector:
-    component: websocket
+    component: pod
     app: zammad
   type: NodePort
+
 ---
 kind: Service
 apiVersion: v1
@@ -83,6 +71,7 @@ spec:
     component: nginx
     app: zammad
   type: NodePort
+
 ---
 kind: Service
 apiVersion: v1

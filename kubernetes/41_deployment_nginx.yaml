@@ -1,21 +1,16 @@
-apiVersion: apps/v1beta1
-kind: StatefulSet
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
   name: zammad-nginx
   namespace: zammad
-  labels:
-    component: nginx
-    app: zammad
 spec:
-  serviceName: zammad-nginx
   replicas: 1
   template:
     metadata:
       labels:
-        component: nginx
         app: zammad
+        component: nginx
     spec:
-      terminationGracePeriodSeconds: 10
       containers:
       - name: zammad-nginx
         image: monotek/zammad-docker-compose:zammad
@@ -23,6 +18,4 @@ spec:
         ports:
         - containerPort: 80
           name: nginx
-        - containerPort: 6042
-          name: nginx-ws
         imagePullPolicy: Always
