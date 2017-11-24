@@ -19,7 +19,7 @@ function check_nfs_available {
 
 function mount_nfs {
   if [ -n "$(env|grep KUBERNETES)" ]; then
-    check_nfs_available
+    #check_nfs_available
 
     test -d ${ZAMMAD_DIR}/tmp || mkdir -p ${ZAMMAD_DIR}/tmp
     mount -t nfs4 zammad-nfs:/ ${ZAMMAD_DIR}/tmp
@@ -74,7 +74,7 @@ fi
 
 # zammad-scheduler
 if [ "$1" = 'zammad-scheduler' ]; then
-  check_railsserver_available
+  #check_railsserver_available
 
   echo "scheduler can access raillsserver now..."
 
@@ -88,7 +88,7 @@ fi
 
 # zammad-websocket
 if [ "$1" = 'zammad-websocket' ]; then
-  check_railsserver_available
+  #check_railsserver_available
 
   echo "websocket server can access raillsserver now..."
 

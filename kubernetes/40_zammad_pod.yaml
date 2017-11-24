@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: zammad
+  namespace: zammad
 spec:
   volumes:
   - name: cache-volume
