@@ -8,8 +8,8 @@ spec:
   template:
     metadata:
       labels:
-        app: zammad
-        component: nginx
+        app: nginx
+        component: webserver
     spec:
       containers:
       - name: zammad-nginx

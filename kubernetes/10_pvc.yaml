@@ -11,6 +11,7 @@ spec:
   resources:
     requests:
       storage: 10G
+
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -24,6 +25,7 @@ spec:
   resources:
     requests:
       storage: 10G
+      
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
