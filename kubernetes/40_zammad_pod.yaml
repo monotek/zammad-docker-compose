@@ -3,6 +3,9 @@ kind: Pod
 metadata:
   name: zammad
 spec:
+  volumes:
+  - name: cache-volume
+    emptyDir: {}
   containers:
   - name: zammad-scheduler
     image: monotek/zammad-docker-compose:zammad
@@ -37,6 +40,3 @@ spec:
     volumeMounts:
     - mountPath: /opt/zammad/tmp
       name: cache-volume
-  volumes:
-  - name: cache-volume
-    emptyDir: {}
