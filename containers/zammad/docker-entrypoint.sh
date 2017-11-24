@@ -23,15 +23,11 @@ function mount_nfs {
 
     test -d ${ZAMMAD_DIR}/tmp || mkdir -p ${ZAMMAD_DIR}/tmp
     mount -t nfs4 zammad-nfs:/ ${ZAMMAD_DIR}/tmp
-
-    #test -d ${ZAMMAD_DIR}/storage || mkdir -p ${ZAMMAD_DIR}/storage
-    #mount -t nfs4 zammad-nfs:/data ${ZAMMAD_DIR}/storage
   fi
 }
 
 # zammad-railsserver
 if [ "$1" = 'zammad-railsserver' ]; then
-
   # wait for postgres process coming up on zammad-postgresql
   until (echo > /dev/tcp/zammad-postgresql/5432) &> /dev/null; do
     echo "waiting for postgresql server to be ready..."
