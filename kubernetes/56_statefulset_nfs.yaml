@@ -17,9 +17,9 @@ spec:
     spec:
       terminationGracePeriodSeconds: 10
       volumes:
-      - name: zammad-storage
+      - name: zammad
         persistentVolumeClaim:
-          claimName: zammad-storage
+          claimName: zammad
       containers:
       - name: zammad-nfs
         image: monotek/zammad-docker-compose:zammad-nfs
