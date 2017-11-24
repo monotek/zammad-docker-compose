@@ -9,10 +9,10 @@ metadata:
     component: services
 spec:
   ports:
-  - name: websocket
-    port: 6042
   - name: railsserver
     port: 3000
+  - name: websocket
+    port: 6042
   selector:
     app: zammad
     component: services

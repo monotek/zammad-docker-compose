@@ -100,5 +100,10 @@ fi
 
 # zammad nginx
 if [ "$1" = 'zammad-nginx' ]; then
+
+  if [ -n "$(env|grep KUBERNETES)" ]; then
+    sed -i -e 's#server zammad-railsserver:3000#server zammad:3000#g' -e 's#zammad-websocket:6042#zammad:6042#g' /etc/nginx/sites-enabled/default
+  fi
+
   exec /usr/sbin/nginx -g 'daemon off;'
 fi
