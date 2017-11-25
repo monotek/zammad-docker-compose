@@ -4,7 +4,7 @@ metadata:
   name: zammad-nfs
   namespace: zammad
   labels:
-    component: netfs
+    component: networkstorage
     app: nfs
 spec:
   serviceName: zammad-nfs
@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        component: netfs
+        component: networkstorage
         app: nfs
     spec:
       terminationGracePeriodSeconds: 10
