@@ -54,9 +54,7 @@ fi
 if [ "$1" = 'zammad-railsserver' ]; then
   echo "starting railsserver..."
 
-  if [ "${RAILS_SERVER}" == "puma" ]; then
-    exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec puma -b tcp://0.0.0.0:3000 -e ${RAILS_ENV}
-  fi
+  exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec puma -b tcp://0.0.0.0:3000 -e ${RAILS_ENV}
 fi
 
 
