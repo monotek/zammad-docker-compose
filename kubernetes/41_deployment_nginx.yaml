@@ -11,6 +11,13 @@ spec:
         app: nginx
         component: webserver
     spec:
+      volumes:
+      - name: uploads
+        nfs:
+          # fixme: use ip of zammad-nfs service instead of 'server: zammad-nfs' because of: https://github.com/kubernetes/kubernetes/pull/51645
+          server: zammad-nfs
+          path: /uploads
+
       containers:
       - name: zammad-nginx
         image: monotek/zammad-docker-compose:zammad
@@ -19,3 +26,6 @@ spec:
         - containerPort: 80
           name: nginx
         imagePullPolicy: Always
+        volumeMounts:
+        - name: uploads
+          mountPath: /opt/zammad/assets/uploads
