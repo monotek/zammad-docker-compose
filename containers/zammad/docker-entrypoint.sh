@@ -64,7 +64,7 @@ fi
 if [ "$1" = 'zammad-scheduler' ]; then
   echo "starting scheduler..."
 
-  exec gosu ${Zzammad-nginx-59f68b57f-j6v4jAMMAD_USER}:${ZAMMAD_USER} bundle exec script/scheduler.rb run
+  exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec script/scheduler.rb run
 fi
 
 
