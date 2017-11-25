@@ -10,7 +10,7 @@ if [ "$1" = 'zammad-init' ]; then
     sleep 5
   done
 
-  echo "initialising database..."
+  echo "initialising / updating database..."
 
   # db mirgrate
   set +e
@@ -19,7 +19,6 @@ if [ "$1" = 'zammad-init' ]; then
   set -e
 
   if [ "${DB_CHECK}" != "0" ]; then
-    echo "updating database..."
     bundle exec rake db:create
     bundle exec rake db:migrate
     bundle exec rake db:seed
