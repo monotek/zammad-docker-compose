@@ -1,12 +1,5 @@
 # Zammad kubernetes example deployment (pre beta)
 
-The zammad-nfs container is some proof of concept for shared storage. This
-container is only needed if you store Zammads articles in the filesystem as
-zammads rails-server, scheduler & websocket-server  needs to acces it. If you
-save all articles to the postgresql db you don't need the nfs container.
-Be aware that storing articles in db is discouraged on larger installations.
-
-
 ## Prerequisites
 
 - Change the ingress to your needs.

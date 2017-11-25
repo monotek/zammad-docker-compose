@@ -19,7 +19,7 @@ spec:
           server: zammad-nfs
           path: /
 
-      initcontainers:
+      initContainers:
       - name: zammad-init
         image: monotek/zammad-docker-compose:zammad
         args: [ "zammad-init" ]
@@ -56,8 +56,8 @@ spec:
         volumeMounts:
         - name: cache-volume
           mountPath: /opt/zammad/tmp
-      - name: data
-        mountPath: /opt/zammad/storage
+        - name: data
+          mountPath: /opt/zammad/storage
 
       - name: zammad-websocket
         image: monotek/zammad-docker-compose:zammad
