@@ -3,10 +3,10 @@
 set -e
 
 if [ "$1" = 'zammad-nfs' ]; then
-  echo "create & mount nfs dir"
+  echo "creating nfs dir"
 
   test -d ${NFS_DIR} || mkdir -p ${NFS_DIR}
-  chmod 777 ${NFS_DIR}
+  chmod -R 777 ${NFS_DIR}
 
   echo "create nfs exports"
   echo "# NFS Export for Zammad" > /etc/exports

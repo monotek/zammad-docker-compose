@@ -15,7 +15,7 @@ services:
     restart: always
     volumes:
       - zammad-backup:/var/tmp/zammad
-      - zammad-data:/opt/zammad/storage/fs
+      - zammad-data:/opt/zammad/storage
 
   zammad-elasticsearch:
     image: monotek/zammad-docker-compose:zammad-elasticsearch${VERSION}
@@ -35,7 +35,7 @@ services:
     links:
       - zammad-elasticsearch
       - zammad-postgresql
-    restart: onfailure
+    restart: on-failure
 
   zammad-nginx:
     command: ["zammad-nginx"]

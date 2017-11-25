@@ -1,7 +1,7 @@
 FROM cpuguy83/nfs-server
 MAINTAINER Zanmmad <info@zammad.org>
 
-ENV NFS_DIR /zammad-data
+ENV NFS_DIR /zammad-data/uploads
 ENV TMPFS_SIZE 256M
 
 LABEL org.label-schema.build-date="$BUILD_DATE" \

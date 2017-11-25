@@ -16,9 +16,14 @@ spec:
         emptyDir: {}
       - name: data
         nfs:
-          # fixme use ip of zammad-nfs service instead of 'server: zammad-nfs' because of: https://github.com/kubernetes/kubernetes/pull/51645
+          # fixme: use ip of zammad-nfs service instead of 'server: zammad-nfs' because of: https://github.com/kubernetes/kubernetes/pull/51645
           server: zammad-nfs
           path: /
+      - name: uploads
+        nfs:
+          # fixme: use ip of zammad-nfs service instead of 'server: zammad-nfs' because of: https://github.com/kubernetes/kubernetes/pull/51645
+          server: zammad-nfs
+          path: /uploads
 
       initContainers:
       - name: zammad-init
@@ -32,6 +37,8 @@ spec:
           mountPath: /opt/zammad/tmp
         - name: data
           mountPath: /opt/zammad/storage
+        - name: uploads
+          mountPath: /opt/zammad/assets/uploads
 
       containers:
       - name: zammad-scheduler
@@ -60,6 +67,8 @@ spec:
           mountPath: /opt/zammad/tmp
         - name: data
           mountPath: /opt/zammad/storage
+        - name: uploads
+          mountPath: /opt/zammad/assets/uploads
 
       - name: zammad-websocket
         image: monotek/zammad-docker-compose:zammad
