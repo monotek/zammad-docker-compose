@@ -7,7 +7,7 @@ if [ "$1" = 'zammad-nfs' ]; then
 
   test -d ${NFS_DIR}/data || mkdir -p ${NFS_DIR}/data
   test -d ${NFS_DIR}/uploads || mkdir -p ${NFS_DIR}/uploads
-  chmod -R 777  ${NFS_DIR}/data ${NFS_DIR}/uploads
+  chmod -R 777 ${NFS_DIR}
 
   echo "create nfs exports"
   echo "# NFS Export for Zammad" > /etc/exports

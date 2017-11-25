@@ -15,7 +15,7 @@ spec:
       - name: uploads
         nfs:
           # fixme: use ip of zammad-nfs service instead of 'server: zammad-nfs' because of: https://github.com/kubernetes/kubernetes/pull/51645
-          server: 10.0.0.97
+          server: 10.0.0.138
           path: /uploads
 #      - name: config
 #        configMap:
