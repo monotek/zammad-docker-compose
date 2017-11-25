@@ -16,13 +16,13 @@ spec:
         emptyDir: {}
       - name: data
         nfs:
-          # fixme: use ip of zammad-nfs service instead of 'server: zammad-nfs' because of: https://github.com/kubernetes/kubernetes/pull/51645
-          server: 10.0.0.138
+          # FIXME: use the nfs service IP instead of 'zammad-nfs'
+          server: 10.0.0.181
           path: /data
       - name: uploads
         nfs:
-          # fixme: use ip of zammad-nfs service instead of 'server: zammad-nfs' because of: https://github.com/kubernetes/kubernetes/pull/51645
-          server: 10.0.0.138
+          # FIXME: use nfs service  IP instead of 'zammad-nfs'
+          server: 10.0.0.181
           path: /uploads
 
       initContainers:
@@ -30,8 +30,6 @@ spec:
         image: monotek/zammad-docker-compose:zammad
         args: [ "zammad-init" ]
         imagePullPolicy: Always
-        securityContext:
-          privileged: true
         volumeMounts:
         - name: cache-volume
           mountPath: /opt/zammad/tmp
@@ -45,8 +43,6 @@ spec:
         image: monotek/zammad-docker-compose:zammad
         args: [ "zammad-scheduler" ]
         imagePullPolicy: Always
-        securityContext:
-          privileged: true
         volumeMounts:
         - name: cache-volume
           mountPath: /opt/zammad/tmp
@@ -60,8 +56,6 @@ spec:
         ports:
         - name: railsserver
           containerPort: 3000
-        securityContext:
-          privileged: true
         volumeMounts:
         - name: cache-volume
           mountPath: /opt/zammad/tmp
@@ -77,8 +71,6 @@ spec:
         - name: websocket
           containerPort: 6042
         imagePullPolicy: Always
-        securityContext:
-          privileged: true
         volumeMounts:
         - name: cache-volume
           mountPath: /opt/zammad/tmp
