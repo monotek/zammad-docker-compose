@@ -27,6 +27,7 @@ if [ "$1" = 'zammad-init' ]; then
   echo "changing settings..."
   # es config
   bundle exec rails r "Setting.set('es_url', 'http://zammad-elasticsearch:9200')"
+
   # disable storage setting in admin backend
   #bundle exec rails r "setting = Setting.find_by(name: 'storage_provider');setting.preferences[:permission] = ['admin_not_existing_permission'];setting.save!"
 
