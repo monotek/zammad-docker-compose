@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: nginx-default
 data:
-  default: |
+  default: |-
 #
 # this is the nginx config for zammad
 #

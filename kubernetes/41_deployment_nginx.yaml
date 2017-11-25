@@ -17,9 +17,9 @@ spec:
           # fixme: use ip of zammad-nfs service instead of 'server: zammad-nfs' because of: https://github.com/kubernetes/kubernetes/pull/51645
           server: 10.0.0.97
           path: /uploads
-      - name: config
-        configMap:
-          name: nginx-default
+#      - name: config
+#        configMap:
+#          name: nginx-default
 
       containers:
       - name: zammad-nginx
@@ -32,5 +32,5 @@ spec:
         volumeMounts:
         - name: uploads
           mountPath: /opt/zammad/assets/uploads
-        - name: config
-          mountPath: /etc/nginx/sites-enabled/default
+#        - name: config
+#          mountPath: /etc/nginx/sites-enabled/default
