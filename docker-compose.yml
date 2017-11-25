@@ -25,6 +25,18 @@ services:
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
 
+  zammad-init:
+    command: ["zammad-init"]
+    depends_on:
+      - zammad-postgresql
+    image: monotek/zammad-docker-compose:zammad${VERSION}
+    labels:
+      io.rancher.container.pull_image: always
+    links:
+      - zammad-elasticsearch
+      - zammad-postgresql
+    restart: onfailure
+
   zammad-nginx:
     command: ["zammad-nginx"]
     depends_on:

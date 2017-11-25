@@ -2,43 +2,54 @@
 
 set -e
 
-function check_railsserver_available {
-  # wait for zammad process coming up
-  until (echo > /dev/tcp/zammad-railsserver/3000) &> /dev/null; do
-    echo "waiting for zammads railsserver to be ready..."
-    sleep 2
-  done
-}
-
-function check_nfs_available {
-  until (echo > /dev/tcp/zammad-nfs/2049) &> /dev/null; do
-    echo "waiting for zammads nfsserver to be ready..."
-    sleep 2
-  done
-}
-
-function mount_nfs {
-  if [ -n "$(env|grep KUBERNETES)" ]; then
-    check_nfs_available
-
-    test -d ${ZAMMAD_DIR}/storage || mkdir -p ${ZAMMAD_DIR}/storage
-    mount -t nfs4 zammad-nfs:/ ${ZAMMAD_DIR}/storage
-  fi
-}
-
 # zammad-railsserver
 if [ "$1" = 'zammad-railsserver' ]; then
-  # wait for postgres process coming up on zammad-postgresql
-  until (echo > /dev/tcp/zammad-postgresql/5432) &> /dev/null; do
-    echo "waiting for postgresql server to be ready..."
-    sleep 5
-  done
+  echo "starting zammad..."
 
-  echo "railsserver can access postgresql server now..."
+  if [ "${RAILS_SERVER}" == "puma" ]; then
+    exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec puma -b tcp://0.0.0.0:3000 -e ${RAILS_ENV}
+  fi
+fi
 
-  mount_nfs
 
+# zammad-scheduler
+if [ "$1" = 'zammad-scheduler' ]; then
+  echo "scheduler can access raillsserver now..."
+
+  # start scheduler
   cd ${ZAMMAD_DIR}
+  exec gosu ${Zzammad-nginx-59f68b57f-j6v4jAMMAD_USER}:${ZAMMAD_USER} bundle exec script/scheduler.rb run
+fi
+
+
+# zammad-websocket
+if [ "$1" = 'zammad-websocket' ]; then
+  echo "starting websocket server"
+
+  exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec script/websocket-server.rb -b 0.0.0.0 start
+fi
+
+# zammad nginx
+if [ "$1" = 'zammad-nginx' ]; then
+  echo "starting nginx"
+
+  if [ -n "$(env|grep KUBERNETES)" ]; then
+    sed -i -e 's#server zammad-railsserver:3000#server zammad:3000#g' -e 's#zammad-websocket:6042#zammad:6042#g' /etc/nginx/sites-enabled/default
+  fi
+
+  exec /usr/sbin/nginx -g 'daemon off;'
+fi
+
+if [ "$1" = 'zammad-init' ]; then
+  function check_railsserver_available {
+    # wait for zammad process coming up
+    until (echo > /dev/tcp/zammad-railsserver/3000) &> /dev/null; do
+      echo "waiting for zammads railsserver to be ready..."
+      sleep 2
+    done
+  }
+
+  echo "initialising database"
 
   # db mirgrate
   set +e
@@ -53,6 +64,7 @@ if [ "$1" = 'zammad-railsserver' ]; then
     bundle exec rake db:seed
   fi
 
+  echo "changing settings..."
   # es config
   bundle exec rails r "Setting.set('es_url', 'http://zammad-elasticsearch:9200')"
   bundle exec rake searchindex:rebuild
@@ -63,47 +75,4 @@ if [ "$1" = 'zammad-railsserver' ]; then
   # chown everything to zammad user
   chown -R ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_DIR}
 
-  # run zammad
-  echo "starting zammad..."
-
-  if [ "${RAILS_SERVER}" == "puma" ]; then
-    exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec puma -b tcp://0.0.0.0:3000 -e ${RAILS_ENV}
-  fi
-fi
-
-
-# zammad-scheduler
-if [ "$1" = 'zammad-scheduler' ]; then
-  check_railsserver_available
-
-  echo "scheduler can access raillsserver now..."
-
-  mount_nfs
-
-  # start scheduler
-  cd ${ZAMMAD_DIR}
-  exec gosu ${Zzammad-nginx-59f68b57f-j6v4jAMMAD_USER}:${ZAMMAD_USER} bundle exec script/scheduler.rb run
-fi
-
-
-# zammad-websocket
-if [ "$1" = 'zammad-websocket' ]; then
-  check_railsserver_available
-
-  echo "websocket server can access raillsserver now..."
-
-  mount_nfs
-
-  cd ${ZAMMAD_DIR}
-  exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec script/websocket-server.rb -b 0.0.0.0 start
-fi
-
-# zammad nginx
-if [ "$1" = 'zammad-nginx' ]; then
-
-  if [ -n "$(env|grep KUBERNETES)" ]; then
-    sed -i -e 's#server zammad-railsserver:3000#server zammad:3000#g' -e 's#zammad-websocket:6042#zammad:6042#g' /etc/nginx/sites-enabled/default
-  fi
-
-  exec /usr/sbin/nginx -g 'daemon off;'
 fi
