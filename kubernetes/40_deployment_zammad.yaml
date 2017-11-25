@@ -17,7 +17,7 @@ spec:
       - name: data
         nfs:
           server: zammad-nfs
-          path: /
+          path: /zammad-data
 
       initContainers:
       - name: zammad-init
@@ -25,6 +25,7 @@ spec:
         args: [ "zammad-init" ]
         imagePullPolicy: Always
         securityContext:
+          privileged: true
         volumeMounts:
         - name: cache-volume
           mountPath: /opt/zammad/tmp
