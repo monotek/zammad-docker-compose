@@ -8,7 +8,7 @@ beta and not ready for production.
 - Change the ingress to your needs
 
 
-## Deploy zammad
+## Deploy Zammad
 
 ### Install on Minikube
 
