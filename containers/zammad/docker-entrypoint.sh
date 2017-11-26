@@ -76,7 +76,7 @@ if [ "$1" = 'zammad-nginx' ]; then
     sed -i -e 's#server zammad-\(railsserver\|websocket\):#server zammad:#g' /etc/nginx/sites-enabled/default
   fi
 
-  until [ -f "${ZAMMAD_READY_FILE}" ] && [ -n "$(grep zammad-railsserver < ${ZAMMAD_READY_FILE})" ] && [ -n "$(grep zammad-scheduler < ${ZAMMAD_READY_FILE})" ] && [ -n "$(grep zammad-websocket < ${ZAMMAD_READY_FILE})" ] ; do
+  until [ -f "${ZAMMAD_DIR}/${ZAMMAD_READY_FILE}" ] && [ -n "$(grep zammad-railsserver < ${ZAMMAD_DIR}/${ZAMMAD_READY_FILE})" ] && [ -n "$(grep zammad-scheduler < ${ZAMMAD_DIR}/${ZAMMAD_READY_FILE})" ] && [ -n "$(grep zammad-websocket < ${ZAMMAD_DIR}/${ZAMMAD_READY_FILE})" ] ; do
     echo "waiting for all zammad services to start..."
     sleep 5
   done
@@ -95,6 +95,8 @@ if [ "$1" = 'zammad-railsserver' ]; then
 
   check_zammad_ready
 
+  cd ${ZAMMAD_DIR}
+
   echo "starting railsserver..."
 
   echo "zammad-railsserver" >> ${ZAMMAD_DIR}/${ZAMMAD_READY_FILE}
@@ -109,6 +111,8 @@ if [ "$1" = 'zammad-scheduler' ]; then
 
   check_zammad_ready
 
+  cd ${ZAMMAD_DIR}
+
   echo "starting scheduler..."
 
   echo "zammad-scheduler" >> ${ZAMMAD_DIR}/${ZAMMAD_READY_FILE}
@@ -122,6 +126,8 @@ if [ "$1" = 'zammad-websocket' ]; then
   mount_nfs
 
   check_zammad_ready
+
+  cd ${ZAMMAD_DIR}
 
   echo "starting websocket server..."
 
