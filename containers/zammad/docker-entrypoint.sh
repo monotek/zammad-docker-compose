@@ -74,7 +74,7 @@ if [ "$1" = 'zammad-nginx' ]; then
   mount_nfs
 
   if [ -n "$(env|grep KUBERNETES)" ]; then
-    sed -i -e 's#server zammad-railsserver:3000#server zammad:3000#g' -e 's#zammad-websocket:6042#zammad:6042#g' /etc/nginx/sites-enabled/default
+    sed -i -e 's#server zammad-\(railsserver\|websocket\):#server zammad:#g' /etc/nginx/sites-enabled/default
   fi
 
   until [ -f "${ZAMMAD_READY_FILE}" ] && [ -n "$(grep zammad-railsserver < ${ZAMMAD_READY_FILE})" ] && [ -n "$(grep zammad-scheduler < ${ZAMMAD_READY_FILE})" ] && [ -n "$(grep zammad-websocket < ${ZAMMAD_READY_FILE})" ] ; do
