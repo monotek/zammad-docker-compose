@@ -40,6 +40,24 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
+  name: zammad-memcached
+  namespace: zammad
+  labels:
+    app: memcached
+    component: cache
+spec:
+  ports:
+  - name: memcached
+    port: 11211
+  selector:
+    app: memcached
+    component: cache
+  type: NodePort
+
+---
+kind: Service
+apiVersion: v1
+metadata:
   name: zammad-nfs
   namespace: zammad
   labels:
