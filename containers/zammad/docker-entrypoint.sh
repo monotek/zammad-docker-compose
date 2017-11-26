@@ -64,8 +64,7 @@ if [ "$1" = 'zammad-init' ]; then
   chown -R ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_DIR}
 
   # create install ready file
-  echo "zammad-init" > ${ZAMMAD_READY_FILE}
-  chown ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_DIR}/${ZAMMAD_READY_FILE}
+  su -c "echo 'z0ammad-init' > ${ZAMMAD_READY_FILE}" ${ZAMMAD_USER}
 fi
 
 
