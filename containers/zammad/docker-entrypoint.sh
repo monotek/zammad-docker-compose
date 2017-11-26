@@ -3,7 +3,7 @@
 set -e
 
 function check_install_update_ready {
-  until [ -f "${INSTALL_READY_FILE}" ]; then
+  until [ -f "${INSTALL_UPDATE_READY_FILE}" ]; then
     echo "waiting for install or update to be ready..."
     sleep 5
   done
@@ -44,7 +44,8 @@ if [ "$1" = 'zammad-init' ]; then
   # chown everything to zammad user
   chown -R ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_DIR}
 
-  touch ${DB_READY_FILE}
+  # create install ready file
+  touch ${INSTALL_UPDATE_READY_FILE}
 fi
 
 
