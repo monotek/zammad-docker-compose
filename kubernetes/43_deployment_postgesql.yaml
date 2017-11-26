@@ -1,5 +1,5 @@
 apiVersion: apps/v1beta1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: zammad-postgresql
   namespace: zammad

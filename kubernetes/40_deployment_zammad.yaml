@@ -11,18 +11,19 @@ spec:
         app: zammad
         component: services
     spec:
+      terminationGracePeriodSeconds: 10
       # volumes:
       # - name: cache-volume
       #   emptyDir: {}
       # - name: data
       #   nfs:
       #     # FIXME: use the nfs service IP instead of 'zammad-nfs'
-      #     server: 10.0.0.117
+      #     server: zammad-nfs
       #     path: /data
       # - name: uploads
       #   nfs:
       #     # FIXME: use nfs service  IP instead of 'zammad-nfs'
-      #     server: 10.0.0.117
+      #     server: zammad-nfs
       #     path: /uploads
 
       initContainers:

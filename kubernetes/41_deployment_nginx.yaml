@@ -11,11 +11,12 @@ spec:
         app: nginx
         component: webserver
     spec:
+      terminationGracePeriodSeconds: 10
 #      volumes:
 #      - name: uploads
 #        nfs:
 #          # FIXME: use nfs service  IP instead of 'zammad-nfs'
-#          server: 10.0.0.117
+#          server: zammad-nfs
 #          path: /uploads
       containers:
       - name: zammad-nginx

@@ -107,7 +107,7 @@ fi
 
 # zammad-scheduler
 if [ "$1" = 'zammad-scheduler' ]; then
-  check_zammad_ready
+  check_railsserver_available
 
   mount_nfs
 
@@ -121,7 +121,7 @@ fi
 
 # zammad-websocket
 if [ "$1" = 'zammad-websocket' ]; then
-  check_zammad_ready
+  check_railsserver_available
 
   mount_nfs
 

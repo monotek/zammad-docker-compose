@@ -11,6 +11,7 @@ spec:
         app: memcached
         component: cache
     spec:
+      terminationGracePeriodSeconds: 10
       containers:
       - name: zammad-memcached
         image: monotek/zammad-docker-compose:zammad-memcached
