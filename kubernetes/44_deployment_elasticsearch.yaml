@@ -3,11 +3,7 @@ kind: Deployment
 metadata:
   name: zammad-elasticsearch
   namespace: zammad
-  labels:
-    component: database
-    app: elasticsearch
 spec:
-  serviceName: zammad-elasticsearch
   replicas: 1
   template:
     metadata:
