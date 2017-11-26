@@ -24,7 +24,7 @@ LABEL org.label-schema.build-date="$BUILD_DATE" \
       org.label-schema.docker.cmd="sysctl -w vm.max_map_count=262144;docker-compose up"
 
 # install dependencies, GOSU & zammad
-RUN BUILD_DEPENDENCIES="git build-essential libffi-dev libpq5 libpq-dev nginx nfs-common" \
+RUN BUILD_DEPENDENCIES="git build-essential libffi-dev libpq5 libpq-dev nginx nfs-common rsync" \
     GOSU_DEPENDENCIES="ca-certificates wget" \
     set -ex \
 	  && apt-get update && apt-get install -y --force-yes --no-install-recommends ${BUILD_DEPENDENCIES} ${GOSU_DEPENDENCIES} && rm -rf /var/lib/apt/lists/* \
