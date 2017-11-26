@@ -37,7 +37,7 @@ services:
       - zammad-postgresql
     restart: on-failure
     volumes:
-      - zammad-data:/opt/zammad    
+      - zammad-data:/opt/zammad
 
   zammad-memcached:
     command: ["zammad-memcached"]
@@ -57,6 +57,8 @@ services:
       - zammad-railsserver
       - zammad-websocket
     restart: always
+    volumes:
+      - zammad-data:/opt/zammad
 
   zammad-postgresql:
     image: monotek/zammad-docker-compose:zammad-postgresql${VERSION}
