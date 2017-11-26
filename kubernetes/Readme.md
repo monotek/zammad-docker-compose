@@ -10,7 +10,7 @@ beta and not ready for production.
 
 ## Deploy zammad
 
-### Install on Minikube example
+### Install on Minikube
 
 * Install kubectl
   * https://kubernetes.io/docs/tasks/tools/install-kubectl/
