@@ -43,5 +43,6 @@ beta and not ready for production.
         * 40_deployment_zammad.yaml
         * 41_deployment_nginx.yaml
     * kubectl apply -f 10_pvc.yaml -f 40_deployment_zammad.yaml -f 41_deployment_nginx.yaml -f 42_deployment_memcached.yaml -f 43_deployment_postgesql.yaml -f 44_deployment_elasticsearch.yaml -f 45_deployment_nfs.yaml -f 90_ingress.yaml
+* create config map for nginx
 * create a zammad helm chart
 * document steps to use existing helm charts for elasticsearch and so on
