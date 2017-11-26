@@ -3,11 +3,7 @@ kind: Deployment
 metadata:
   name: zammad-postgresql
   namespace: zammad
-  labels:
-    component: database
-    app: postgresql
 spec:
-  serviceName: zammad-postgresql
   replicas: 1
   template:
     metadata:

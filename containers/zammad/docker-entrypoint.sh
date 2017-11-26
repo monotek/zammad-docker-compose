@@ -13,6 +13,7 @@ function mount_nfs {
   if [ -n "$(env|grep KUBERNETES)" ]; then
     test -d ${ZAMMAD_DIR} || mkdir -p ${ZAMMAD_DIR}
     mount -t nfs4 zammad-nfs:/data /opt/zammad
+    chown ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_DIR}
   fi
 }
 
