@@ -19,7 +19,6 @@ function mount_nfs {
 
 # zammad init
 if [ "$1" = 'zammad-init' ]; then
-  # wait for postgres process coming up on zammad-postgresql
   until (echo > /dev/tcp/zammad-postgresql/5432) &> /dev/null; do
     echo "zammad railsserver waiting for postgresql server to be ready..."
     sleep 5
@@ -50,6 +49,11 @@ if [ "$1" = 'zammad-init' ]; then
   echo "changing settings..."
   # es config
   bundle exec rails r "Setting.set('es_url', 'http://zammad-elasticsearch:9200')"
+
+  until (echo > /dev/tcp/zammad-elasticsearch/9200) &> /dev/null; do
+    echo "zammad railsserver waiting for elasticsearch server to be ready..."
+    sleep 5
+  done
 
   echo "rebuilding es searchindex..."
   bundle exec rake searchindex:rebuild
