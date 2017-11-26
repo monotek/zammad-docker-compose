@@ -2,13 +2,6 @@
 
 set -e
 
-function check_railsserver_available {
-  until (echo > /dev/tcp/zammad-railsserver/3000) &> /dev/null; do
-    echo "waiting for zammads railsserver to be ready..."
-    sleep 5
-  done
-}
-
 function check_zammad_ready {
   until [ -f "${ZAMMAD_READY_FILE}" ]; do
     echo "waiting for install or update to be ready..."
