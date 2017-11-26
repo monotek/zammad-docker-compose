@@ -3,7 +3,7 @@
 set -e
 
 function check_zammad_ready {
-  until [ -f "${ZAMMAD_READY_FILE}" ]; do
+  until [ -f "${ZAMMAD_DIR}/${ZAMMAD_READY_FILE}" ]; do
     echo "waiting for install or update to be ready..."
     sleep 5
   done
@@ -64,7 +64,7 @@ if [ "$1" = 'zammad-init' ]; then
   chown -R ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_DIR}
 
   # create install ready file
-  su -c "echo 'z0ammad-init' > ${ZAMMAD_READY_FILE}" ${ZAMMAD_USER}
+  su -c "echo 'zammad-init' > ${ZAMMAD_DIR}/${ZAMMAD_READY_FILE}" ${ZAMMAD_USER}
 fi
 
 
@@ -81,7 +81,7 @@ if [ "$1" = 'zammad-nginx' ]; then
     sleep 5
   done
 
-  rm ${ZAMMAD_READY_FILE}
+  rm ${ZAMMAD_DIR}/${ZAMMAD_READY_FILE}
 
   echo "starting nginx..."
 
@@ -97,7 +97,7 @@ if [ "$1" = 'zammad-railsserver' ]; then
 
   echo "starting railsserver..."
 
-  echo "zammad-railsserver" >> ${ZAMMAD_READY_FILE}
+  echo "zammad-railsserver" >> ${ZAMMAD_DIR}/${ZAMMAD_READY_FILE}
 
   exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec puma -b tcp://0.0.0.0:3000 -e ${RAILS_ENV}
 fi
@@ -111,7 +111,7 @@ if [ "$1" = 'zammad-scheduler' ]; then
 
   echo "starting scheduler..."
 
-  echo "zammad-scheduler" >> ${ZAMMAD_READY_FILE}
+  echo "zammad-scheduler" >> ${ZAMMAD_DIR}/${ZAMMAD_READY_FILE}
 
   exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec script/scheduler.rb run
 fi
@@ -125,7 +125,7 @@ if [ "$1" = 'zammad-websocket' ]; then
 
   echo "starting websocket server..."
 
-  echo "zammad-websocket" >> ${ZAMMAD_READY_FILE}
+  echo "zammad-websocket" >> ${ZAMMAD_DIR}/${ZAMMAD_READY_FILE}
 
   exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec script/websocket-server.rb -b 0.0.0.0 start
 fi
