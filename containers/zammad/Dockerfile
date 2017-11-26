@@ -3,6 +3,7 @@ MAINTAINER Zammad <info@zammad.org>
 ARG BUILD_DATE
 
 ENV ZAMMAD_DIR /opt/zammad
+ENV ZAMMAD_TMP_DIR /tmp/zammad
 ENV ZAMMAD_USER zammad
 ENV RAILS_ENV production
 ENV RAILS_SERVER puma
