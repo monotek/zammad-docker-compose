@@ -91,9 +91,9 @@ fi
 
 # zammad-railsserver
 if [ "$1" = 'zammad-railsserver' ]; then
-  check_zammad_ready
-
   mount_nfs
+
+  check_zammad_ready
 
   echo "starting railsserver..."
 
@@ -105,9 +105,9 @@ fi
 
 # zammad-scheduler
 if [ "$1" = 'zammad-scheduler' ]; then
-  check_zammad_ready
-
   mount_nfs
+
+  check_zammad_ready
 
   echo "starting scheduler..."
 
@@ -119,9 +119,9 @@ fi
 
 # zammad-websocket
 if [ "$1" = 'zammad-websocket' ]; then
-  check_zammad_ready
-
   mount_nfs
+
+  check_zammad_ready
 
   echo "starting websocket server..."
 
