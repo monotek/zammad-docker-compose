@@ -11,12 +11,12 @@ spec:
         app: nginx
         component: webserver
     spec:
-      volumes:
-      - name: uploads
-        nfs:
-          # FIXME: use nfs service  IP instead of 'zammad-nfs'
-          server: 10.0.0.117
-          path: /uploads
+#      volumes:
+#      - name: uploads
+#        nfs:
+#          # FIXME: use nfs service  IP instead of 'zammad-nfs'
+#          server: 10.0.0.117
+#          path: /uploads
       containers:
       - name: zammad-nginx
         image: monotek/zammad-docker-compose:zammad
@@ -25,6 +25,6 @@ spec:
         - containerPort: 80
           name: nginx
         imagePullPolicy: Always
-        volumeMounts:
-        - name: uploads
-          mountPath: /opt/zammad/assets/uploads
+#        volumeMounts:
+#        - name: uploads
+#          mountPath: /opt/zammad/assets/uploads

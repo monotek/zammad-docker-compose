@@ -7,9 +7,9 @@ ENV ZAMMAD_USER zammad
 ENV RAILS_ENV production
 ENV RAILS_SERVER puma
 ENV GIT_URL https://github.com/zammad/zammad.git
-ENV GIT_BRANCH stable
+ENV GIT_BRANCH develop
 ENV GOSU_VERSION 1.10
-ENV DB_READY_FILE tmp/dbmigration.ready
+ENV INSTALL_UPDATE_READY_FILE tmp/install_update.ready
 
 LABEL org.label-schema.build-date="$BUILD_DATE" \
       org.label-schema.name="Zammad" \
@@ -38,7 +38,7 @@ RUN BUILD_DEPENDENCIES="git build-essential libffi-dev libpq5 libpq-dev nginx nf
     && useradd -M -d ${ZAMMAD_DIR} -s /bin/bash ${ZAMMAD_USER} \
     && cd $(dirname ${ZAMMAD_DIR}) \
     && git clone --depth 1 -b "${GIT_BRANCH}" "${GIT_URL}" \
-    && cd ${ZAMMAD_DIR} \
+    && cd ${ZAMMAD_TMP_DIR} \
     && bundle install --without test development mysql \
     && contrib/packager.io/fetch_locales.rb \
     && sed -e 's#.*adapter: postgresql#  adapter: nulldb#g' -e 's#.*username:.*#  username: postgres#g' -e 's#.*password:.*#  password: \n  host: zammad-postgresql\n#g' < config/database.yml.pkgr > config/database.yml \
@@ -46,7 +46,7 @@ RUN BUILD_DEPENDENCIES="git build-essential libffi-dev libpq5 libpq-dev nginx nf
     && sed -e 's#.*adapter: postgresql#  adapter: postgresql#g' -e 's#.*username:.*#  username: postgres#g' -e 's#.*password:.*#  password: \n  host: zammad-postgresql\n#g' < config/database.yml.pkgr > config/database.yml \
     && rm -r tmp/cache \
     && sed -e 's#server localhost:3000#server zammad-railsserver:3000#g' -e 's#localhost:6042#zammad-websocket:6042#g' -e 's#server_name localhost#server_name _#g' -e 's#.*zammad\.(access|error)\.log.*##g' < contrib/nginx/zammad.conf > /etc/nginx/sites-enabled/default \
-    && chown -R ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_DIR}
+    && chown -R ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_TMP_DIR}
 
 # docker init
 COPY containers/zammad/docker-entrypoint.sh /

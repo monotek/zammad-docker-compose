@@ -9,6 +9,13 @@ function check_install_update_ready {
   done
 }
 
+function mount_nfs {
+  if [ -n "$(env|grep KUBERNETES)" ]; then
+    test -d ${ZAMMAD_DIR} || mkdir -p ${ZAMMAD_DIR}
+    mount -t nfs4 zammad-nfs:/ /opt/zammad
+  fi
+}
+
 # zammad init
 if [ "$1" = 'zammad-init' ]; then
   # wait for postgres process coming up on zammad-postgresql
@@ -17,8 +24,12 @@ if [ "$1" = 'zammad-init' ]; then
     sleep 5
   done
 
-  echo "initialising / updating database..."
+  mount_nfs
 
+  # install / update zammad
+  rsync -a --delete --exclude 'storage/fs/*' ${ZAMMAD_TMP_DIR}/ ${ZAMMAD_DIR}
+
+  echo "initialising / updating database..."
   # db mirgrate
   set +e
   bundle exec rake db:migrate &> /dev/null
@@ -35,9 +46,6 @@ if [ "$1" = 'zammad-init' ]; then
   # es config
   bundle exec rails r "Setting.set('es_url', 'http://zammad-elasticsearch:9200')"
 
-  # disable storage setting in admin backend
-  #bundle exec rails r "setting = Setting.find_by(name: 'storage_provider');setting.preferences[:permission] = ['admin_not_existing_permission'];setting.save!"
-
   echo "rebuilding es searchindex..."
   bundle exec rake searchindex:rebuild
 
@@ -51,6 +59,10 @@ fi
 
 # zammad nginx
 if [ "$1" = 'zammad-nginx' ]; then
+  check_install_update_ready
+
+  mount_nfs
+
   echo "starting nginx..."
 
   if [ -n "$(env|grep KUBERNETES)" ]; then
@@ -65,6 +77,8 @@ fi
 if [ "$1" = 'zammad-railsserver' ]; then
   check_install_update_ready
 
+  mount_nfs
+
   echo "starting railsserver..."
 
   exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec puma -b tcp://0.0.0.0:3000 -e ${RAILS_ENV}
@@ -75,6 +89,8 @@ fi
 if [ "$1" = 'zammad-scheduler' ]; then
   check_install_update_ready
 
+  mount_nfs
+
   echo "starting scheduler..."
 
   exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec script/scheduler.rb run
@@ -84,6 +100,8 @@ fi
 # zammad-websocket
 if [ "$1" = 'zammad-websocket' ]; then
   check_install_update_ready
+
+  mount_nfs
 
   echo "starting websocket server..."
 
