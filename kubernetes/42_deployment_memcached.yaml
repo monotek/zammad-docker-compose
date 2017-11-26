@@ -9,7 +9,7 @@ spec:
     metadata:
       labels:
         app: memcached
-        component: cacheserver
+        component: cache
     spec:
       containers:
       - name: zammad-memcached
