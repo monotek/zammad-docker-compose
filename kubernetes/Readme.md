@@ -47,4 +47,4 @@ beta and not ready for production.
 * create a zammad helm chart
 * document steps to use existing helm charts for elasticsearch and so on
 * add cpu & mem limits
-* add roliung upgrade strategy
+* add rolling upgrade strategy
