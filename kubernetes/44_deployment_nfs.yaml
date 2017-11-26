@@ -1,13 +1,9 @@
 apiVersion: apps/v1beta1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: zammad-nfs
   namespace: zammad
-  labels:
-    component: networkstorage
-    app: nfs
 spec:
-  serviceName: zammad-nfs
   replicas: 1
   template:
     metadata:
