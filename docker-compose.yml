@@ -15,7 +15,7 @@ services:
     restart: always
     volumes:
       - zammad-backup:/var/tmp/zammad
-      - zammad-data:/opt/zammad/storage
+      - zammad-data:/opt/zammad
 
   zammad-elasticsearch:
     image: monotek/zammad-docker-compose:zammad-elasticsearch${VERSION}
@@ -67,8 +67,7 @@ services:
       - zammad-postgresql
     restart: always
     volumes:
-      - zammad-data:/opt/zammad/storage
-      - zammad-tmp:/opt/zammad/tmp
+      - zammad-data:/opt/zammad
 
   zammad-scheduler:
     command: ["zammad-scheduler"]
@@ -82,8 +81,7 @@ services:
       - zammad-postgresql
     restart: always
     volumes:
-      - zammad-data:/opt/zammad/storage
-      - zammad-tmp:/opt/zammad/tmp
+      - zammad-data:/opt/zammad
 
   zammad-websocket:
     command: ["zammad-websocket"]
@@ -96,8 +94,7 @@ services:
       - zammad-postgresql
     restart: always
     volumes:
-      - zammad-data:/opt/zammad/storage
-      - zammad-tmp:/opt/zammad/tmp
+      - zammad-data:/opt/zammad
 
 volumes:
   elasticsearch-data:
@@ -105,6 +102,4 @@ volumes:
   zammad-backup:
     driver: local
   zammad-data:
-    driver: local
-  zammad-tmp:
     driver: local
