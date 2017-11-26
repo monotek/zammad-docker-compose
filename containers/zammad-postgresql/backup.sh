@@ -2,10 +2,10 @@
 
 set -e
 
-function check_railsserver_available {
-  until (echo > /dev/tcp/zammad-railsserver/3000) &> /dev/null; do
-    echo "backup waiting for zammads railsserver to be ready..."
-    sleep 2
+function check_zammad_ready {
+  until [ -f "${ZAMMAD_READY_FILE}" ]; do
+    echo "waiting for install or update to be ready..."
+    sleep 5
   done
 }
 
@@ -28,7 +28,7 @@ function zammad_backup {
 
 if [ "$1" = 'zammad-backup' ]; then
 
-  check_railsserver_available
+  check_zammad_ready
 
   while true; do
     zammad_backup
@@ -39,7 +39,7 @@ if [ "$1" = 'zammad-backup' ]; then
 fi
 
 if [ "$1" = 'zammad-backup-once' ]; then
-  check_railsserver_available
+  check_zammad_ready
 
   zammad_backup
 fi

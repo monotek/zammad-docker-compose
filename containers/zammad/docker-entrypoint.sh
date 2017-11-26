@@ -78,7 +78,7 @@ if [ "$1" = 'zammad-nginx' ]; then
   fi
 
   until [ -f "${ZAMMAD_READY_FILE}" ] && [ -n "$(grep zammad-railsserver < ${ZAMMAD_READY_FILE})" ] && [ -n "$(grep zammad-scheduler < ${ZAMMAD_READY_FILE})" ] && [ -n "$(grep zammad-websocket < ${ZAMMAD_READY_FILE})" ] ; do
-    echo "nginx waiting for all zammad services to start..."
+    echo "waiting for all zammad services to start..."
     sleep 5
   done
 
