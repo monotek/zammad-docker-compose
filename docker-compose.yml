@@ -37,6 +37,13 @@ services:
       - zammad-postgresql
     restart: on-failure
 
+  zammad-memcached:
+    command: ["zammad-memcached"]
+    image: monotek/zammad-docker-compose:zammad-memcached${VERSION}
+    labels:
+      io.rancher.container.pull_image: always
+    restart: always
+
   zammad-nginx:
     command: ["zammad-nginx"]
     depends_on:
@@ -58,12 +65,14 @@ services:
   zammad-railsserver:
     command: ["zammad-railsserver"]
     depends_on:
+      - zammad-memcached
       - zammad-postgresql
     image: monotek/zammad-docker-compose:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
       - zammad-elasticsearch
+      - zammad-memcached
       - zammad-postgresql
     restart: always
     volumes:
@@ -72,12 +81,14 @@ services:
   zammad-scheduler:
     command: ["zammad-scheduler"]
     depends_on:
+      - zammad-memcached
       - zammad-railsserver
     image: monotek/zammad-docker-compose:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
       - zammad-elasticsearch
+      - zammad-memcached
       - zammad-postgresql
     restart: always
     volumes:
@@ -86,12 +97,14 @@ services:
   zammad-websocket:
     command: ["zammad-websocket"]
     depends_on:
+      - zammad-memcached
       - zammad-railsserver
     image: monotek/zammad-docker-compose:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
       - zammad-postgresql
+      - zammad-memcached
     restart: always
     volumes:
       - zammad-data:/opt/zammad
