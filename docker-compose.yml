@@ -36,6 +36,8 @@ services:
       - zammad-elasticsearch
       - zammad-postgresql
     restart: on-failure
+    volumes:
+      - zammad-data:/opt/zammad    
 
   zammad-memcached:
     command: ["zammad-memcached"]
