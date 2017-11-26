@@ -15,7 +15,7 @@ spec:
       - name: uploads
         nfs:
           # FIXME: use nfs service  IP instead of 'zammad-nfs'
-          server: 10.0.0.181
+          server: 10.0.0.117
           path: /uploads
       containers:
       - name: zammad-nginx

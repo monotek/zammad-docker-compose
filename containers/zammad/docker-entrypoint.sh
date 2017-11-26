@@ -2,6 +2,13 @@
 
 set -e
 
+function check_install_update_ready {
+  until [ -f "${INSTALL_READY_FILE}" ]; then
+    echo "waiting for install or update to be ready..."
+    sleep 5
+  done
+}
+
 # zammad init
 if [ "$1" = 'zammad-init' ]; then
   # wait for postgres process coming up on zammad-postgresql
@@ -36,6 +43,8 @@ if [ "$1" = 'zammad-init' ]; then
 
   # chown everything to zammad user
   chown -R ${ZAMMAD_USER}:${ZAMMAD_USER} ${ZAMMAD_DIR}
+
+  touch ${DB_READY_FILE}
 fi
 
 
@@ -53,6 +62,8 @@ fi
 
 # zammad-railsserver
 if [ "$1" = 'zammad-railsserver' ]; then
+  check_install_update_ready
+
   echo "starting railsserver..."
 
   exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec puma -b tcp://0.0.0.0:3000 -e ${RAILS_ENV}
@@ -61,6 +72,8 @@ fi
 
 # zammad-scheduler
 if [ "$1" = 'zammad-scheduler' ]; then
+  check_install_update_ready
+
   echo "starting scheduler..."
 
   exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec script/scheduler.rb run
@@ -69,6 +82,8 @@ fi
 
 # zammad-websocket
 if [ "$1" = 'zammad-websocket' ]; then
+  check_install_update_ready
+
   echo "starting websocket server..."
 
   exec gosu ${ZAMMAD_USER}:${ZAMMAD_USER} bundle exec script/websocket-server.rb -b 0.0.0.0 start

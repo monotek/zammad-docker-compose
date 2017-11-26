@@ -9,6 +9,7 @@ ENV RAILS_SERVER puma
 ENV GIT_URL https://github.com/zammad/zammad.git
 ENV GIT_BRANCH stable
 ENV GOSU_VERSION 1.10
+ENV DB_READY_FILE tmp/dbmigration.ready
 
 LABEL org.label-schema.build-date="$BUILD_DATE" \
       org.label-schema.name="Zammad" \
