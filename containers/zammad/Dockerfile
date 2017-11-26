@@ -36,7 +36,7 @@ RUN BUILD_DEPENDENCIES="git build-essential libffi-dev libpq5 libpq-dev nginx nf
 	  && chmod +x /usr/local/bin/gosu \
 	  && gosu nobody true \
     && useradd -M -d ${ZAMMAD_DIR} -s /bin/bash ${ZAMMAD_USER} \
-    && cd $(dirname ${ZAMMAD_DIR}) \
+    && cd $(dirname ${ZAMMAD_TMP_DIR}) \
     && git clone --depth 1 -b "${GIT_BRANCH}" "${GIT_URL}" \
     && cd ${ZAMMAD_TMP_DIR} \
     && bundle install --without test development mysql \
