@@ -1,4 +1,7 @@
-# Zammad kubernetes example deployment (pre beta)
+# Zammad kubernetes example deployment
+
+This is a proof of concept of a Kubernetes deployment, which should be considered
+beta and not ready for production.
 
 ## Prerequisites
 
