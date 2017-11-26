@@ -31,6 +31,8 @@ spec:
         image: monotek/zammad-docker-compose:zammad
         args: [ "zammad-init" ]
         imagePullPolicy: Always
+        securityContext:
+          privileged: true
         # volumeMounts:
         # - name: cache-volume
         #   mountPath: /opt/zammad/tmp
@@ -44,6 +46,8 @@ spec:
         image: monotek/zammad-docker-compose:zammad
         args: [ "zammad-scheduler" ]
         imagePullPolicy: Always
+        securityContext:
+          privileged: true
         # volumeMounts:
         # - name: cache-volume
         #   mountPath: /opt/zammad/tmp
@@ -57,6 +61,8 @@ spec:
         ports:
         - name: railsserver
           containerPort: 3000
+        securityContext:
+          privileged: true
         # volumeMounts:
         # - name: cache-volume
         #   mountPath: /opt/zammad/tmp
@@ -72,6 +78,8 @@ spec:
         ports:
         - name: websocket
           containerPort: 6042
+        securityContext:
+          privileged: true  
         # volumeMounts:
         # - name: cache-volume
         #   mountPath: /opt/zammad/tmp

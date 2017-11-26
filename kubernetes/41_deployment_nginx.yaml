@@ -26,6 +26,8 @@ spec:
         - containerPort: 80
           name: nginx
         imagePullPolicy: Always
+        securityContext:
+          privileged: true
 #        volumeMounts:
 #        - name: uploads
 #          mountPath: /opt/zammad/assets/uploads

@@ -30,6 +30,8 @@ if [ "$1" = 'zammad-init' ]; then
   rsync -a --delete --exclude 'storage/fs/*' --exclude 'public/assets/images/*' ${ZAMMAD_TMP_DIR}/ ${ZAMMAD_DIR}
   rsync -a ${ZAMMAD_TMP_DIR}/public/assets/images/ ${ZAMMAD_DIR}/public/assets/images
 
+  cd ${ZAMMAD_DIR}
+
   # enable memcached
   sed -i -e "s/.*config.cache_store.*file_store.*cache_file_store.*/    config.cache_store = :dalli_store, 'zammad-memcached:11211'\n    config.session_store = :dalli_store, 'zammad-memcached:11211'/" config/application.rb
 
