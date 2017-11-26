@@ -7,7 +7,7 @@ services:
     depends_on:
       - zammad-railsserver
     entrypoint: /usr/local/bin/backup.sh
-    image: monotek/zammad-docker-compose:zammad-postgresql${VERSION}
+    image: ${IMAGE_REPO}:zammad-postgresql${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
@@ -18,7 +18,7 @@ services:
       - zammad-data:/opt/zammad
 
   zammad-elasticsearch:
-    image: monotek/zammad-docker-compose:zammad-elasticsearch${VERSION}
+    image: ${IMAGE_REPO}:zammad-elasticsearch${VERSION}
     labels:
       io.rancher.container.pull_image: always
     restart: always
@@ -29,7 +29,7 @@ services:
     command: ["zammad-init"]
     depends_on:
       - zammad-postgresql
-    image: monotek/zammad-docker-compose:zammad${VERSION}
+    image: ${IMAGE_REPO}:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
@@ -41,7 +41,7 @@ services:
 
   zammad-memcached:
     command: ["zammad-memcached"]
-    image: monotek/zammad-docker-compose:zammad-memcached${VERSION}
+    image: ${IMAGE_REPO}:zammad-memcached${VERSION}
     labels:
       io.rancher.container.pull_image: always
     restart: always
@@ -50,7 +50,7 @@ services:
     command: ["zammad-nginx"]
     depends_on:
       - zammad-railsserver
-    image: monotek/zammad-docker-compose:zammad${VERSION}
+    image: ${IMAGE_REPO}:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
@@ -61,7 +61,7 @@ services:
       - zammad-data:/opt/zammad
 
   zammad-postgresql:
-    image: monotek/zammad-docker-compose:zammad-postgresql${VERSION}
+    image: ${IMAGE_REPO}:zammad-postgresql${VERSION}
     labels:
       io.rancher.container.pull_image: always
     restart: always
@@ -71,7 +71,7 @@ services:
     depends_on:
       - zammad-memcached
       - zammad-postgresql
-    image: monotek/zammad-docker-compose:zammad${VERSION}
+    image: ${IMAGE_REPO}:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
@@ -87,7 +87,7 @@ services:
     depends_on:
       - zammad-memcached
       - zammad-railsserver
-    image: monotek/zammad-docker-compose:zammad${VERSION}
+    image: ${IMAGE_REPO}:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
@@ -103,7 +103,7 @@ services:
     depends_on:
       - zammad-memcached
       - zammad-railsserver
-    image: monotek/zammad-docker-compose:zammad${VERSION}
+    image: ${IMAGE_REPO}:zammad${VERSION}
     labels:
       io.rancher.container.pull_image: always
     links:
