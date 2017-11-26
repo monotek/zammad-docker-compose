@@ -33,7 +33,7 @@ beta and not ready for production.
 
 
 
-## if you want to help to improve the Kuberntes deployments
+## If you want to help to improve the Kuberntes deployments (Todos):
 * fix the nfs mount from entrypoint, which is currently used because of:
   * https://github.com/kubernetes/kubernetes/issues/8735
   * otherwise you have to manually:
