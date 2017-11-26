@@ -20,6 +20,7 @@ spec:
       - name: zammad-postgresql
         persistentVolumeClaim:
           claimName: zammad-postgresql
+
       containers:
       - name: zammad-postgresql
         image: monotek/zammad-docker-compose:zammad-postgresql
