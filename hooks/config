@@ -3,4 +3,5 @@
 # build hooks config
 #
 
+DOCKER_REPO="monotek/zammad-docker-compose"
 DOCKER_IMAGES="zammad zammad-elasticsearch zammad-memcached zammad-postgresql"
