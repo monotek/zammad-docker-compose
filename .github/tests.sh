@@ -54,7 +54,7 @@ echo
 echo 
 echo "search user"
 echo
-curl --silent --fail --show-error -u info@zammad.org:Zammad 'http://localhost/api/v1/users/search?query=Smith&limit=10&expand=true'
+curl --silent --fail --show-error -u info@zammad.org:Zammad "http://$(docker inspect zammad-docker-compose_zammad-nginx_1 | grep '"IPAddress": "[0-9]*\.[0-9]*\.[0-9]\.[0-9]*' | sed -e 's#.*: "##g' -e 's#",##g')/api/v1/users/search?query=Smith&limit=10&expand=true"
 
 echo
 echo "search user successful :)"
