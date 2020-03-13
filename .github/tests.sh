@@ -37,7 +37,8 @@ echo
 #docker exec zammad-docker-compose_zammad-nginx_1 curl -I localhost
 #docker exec zammad-docker-compose_zammad-nginx_1 curl --cookie --silent --fail --show-error -u info@zammad.org:Zammad -H "Content-Type: application/json" -X POST -d '{"firstname":"Bob","lastname":"Smith","email":"testuser@example.com","roles":["Customer"],"password":"some_password"}' 'http://localhost/api/v1/users'
 
-CSRF_TOKEN="$(curl --silent --fail --show-error -I | grep CSRF-TOKEN | sed -e 's#CSRF-TOKEN: ##')"
+CSRF_TOKEN="$(curl --silent -I | grep CSRF-TOKEN | sed -e 's#CSRF-TOKEN: ##')"
+echo "token: ${CSRF_TOKEN}"
 curl -c cookie -H "X-CSRFToken: ${CSRF_TOKEN}" --silent --fail --show-error -u info@zammad.org:Zammad -H "Content-Type: application/json" -X POST -d '{"firstname":"Bob","lastname":"Smith","email":"testuser@example.com","roles":["Customer"],"password":"some_password"}' 'http://localhost/api/v1/users'
 
 
