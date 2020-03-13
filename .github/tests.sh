@@ -37,10 +37,15 @@ echo
 echo "DB fill successful :)"
 echo
 
+
+
 echo
 echo "create user via api"
 echo
-curl --cookie --silent --fail --show-error -u info@zammad.org:Zammad -H "Content-Type: application/json" -X POST -d '{"firstname":"Bob","lastname":"Smith","email":"testuser@example.com","roles":["Customer"],"password":"some_password"}' 'http://127.0.0.1/api/v1/users'
+
+curl -I http://localhost/api/v1/users
+
+#curl --cookie --silent --fail --show-error -u info@zammad.org:Zammad -H "Content-Type: application/json" -X POST -d '{"firstname":"Bob","lastname":"Smith","email":"testuser@example.com","roles":["Customer"],"password":"some_password"}' 'http://localhost/api/v1/users'
 
 echo
 echo "create user successful :)"
