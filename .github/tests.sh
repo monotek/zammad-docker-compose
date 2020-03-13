@@ -31,12 +31,12 @@ echo
 
 echo 
 echo "Fill db with some random data"
-docker exec zammad-docker-compose_zammad-railsserver_1 rails r "FillDB.load(agents: 10,customers: 10,groups: 10,organizations: 10,overviews: 10,tickets: 10)"
+docker exec zammad-docker-compose_zammad-railsserver_1 rails r "FillDB.load(agents: 1,customers: 1,groups: 1,organizations: 1,overviews: 1,tickets: 1)"
 
 echo
 echo "create user via api"
 echo
-curl --silent --fail --show-error -u info@zammad.org:Zammad -H "Content-Type: application/json" -X POST -d '{"firstname":"Bob","lastname":"Smith","email":"testuser@example.com","roles":["Customer"],"password":"some_password"}' 'http://localhost/api/v1/users'
+curl --silent --fail --show-error -u info@zammad.org:Zammad -H "Content-Type: application/json" -X POST -d '{"firstname":"Bob","lastname":"Smith","email":"testuser@example.com","roles":["Customer"],"password":"some_password"}' 'http://127.0.0.1/api/v1/users'
 
 # echo 
 # echo "search user"
