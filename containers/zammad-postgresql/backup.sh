@@ -2,14 +2,6 @@
 
 set -e
 
-: "${ZAMMAD_DIR:=/opt/zammad}"
-: "${BACKUP_DIR:=/var/tmp/zammad}"
-: "${ZAMMAD_RAILSSERVER_HOST:=zammad-railsserver}"
-: "${ZAMMAD_RAILSSERVER_PORT:=3000}"
-: "${POSTGRESQL_HOST:=zammad-postgresql}"
-: "${POSTGRESQL_PORT:=5432}"
-: "${POSTGRESQL_DB:=zammad_production}"
-
 function check_railsserver_available {
   until (echo > /dev/tcp/${ZAMMAD_RAILSSERVER_HOST}/${ZAMMAD_RAILSSERVER_PORT}) &> /dev/null; do
     echo "waiting for railsserver to be ready..."
